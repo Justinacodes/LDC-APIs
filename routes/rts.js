@@ -1,5 +1,4 @@
 const express = require("express");
-
 const routerManager = express.Router();
 const {
   home,
@@ -30,7 +29,7 @@ const {
 // Home page
 routerManager.get("/", home);
 
-// Vendor routes
+//Vendor routes
 routerManager.get("/vendors", vendors);
 routerManager.post("/vendors", vendors);
 routerManager.put("/vendors", vendors);
@@ -39,8 +38,8 @@ routerManager.get("/customers", customers);
 
 // Menu and search
 routerManager.get("/menu", menu);
-routerManager.get("/search", search);
-routerManager.get("/cuisines", cuisines);
+routerManager.get("/search", search); 
+routerManager.post("/cuisines", cuisines);
 routerManager.get("/explore", explore);
 
 // Contact

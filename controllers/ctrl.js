@@ -1,14 +1,29 @@
 const asyncHandler = require("express-async-handler");
 //const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
 
+const mongoose = require("mongoose");
 const home = asyncHandler(async (req, res) => {
   res.render("index", { title: "Home" });
 });
 
+//vendors page
+mongoose.connect(
+  "mongodb+srv://justinaominisan24:" +
+    process.env.mongo +
+    "@local-dish-corner.e5nsitl.mongodb.net/?retryWrites=true&w=majority&appName=local-dish-corner"
+);
+
+const restaurantSchema = new mongoose.Schema({
+  restaurant: {
+    type: String,
+    required: true,
+  },
+});
+const restaurantcollection = new mongoose.model("restaurant", restaurantSchema);
 const vendors = asyncHandler(async (req, res) => {
   res.render("vendors", { title: "Vendors" });
 
-  const restaurants = [
+  restaurants = [
     {
       restaurant: "Amala Palace",
       food: "Amala and Ewedu",
@@ -39,6 +54,8 @@ const vendors = asyncHandler(async (req, res) => {
     },
   ];
   res.send(restaurants);
+
+  restaurantcollection.insertMany(restaurants);
 });
 
 const customers = asyncHandler(async (req, res) => {
@@ -59,18 +76,38 @@ const contact = asyncHandler(async (req, res) => {
 const search = asyncHandler(async (req, res) => {
   res.render("search", { title: "Search" });
 });
-const cuisines = asyncHandler(async (req, res) => {
-  res.render("cuisines", { title: "Cuisines" });
 
-  const cuisinesList = {
-    cuisine1: "Efo Riro",
-    cuisine2: "Afang Soup",
-    cuisine3: "Tuwo Shinkafa",
-    cuisine4: "Ofe Nsala",
-  };
-  res.send(cuisinesList);
- 
+const Cuisines = require("../models/cuisines");
+const cuisines = asyncHandler(async (req, res) => {
+  const cuisine = new Cuisine({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    price: req.body.price,
+    // const id = req.params.cuisinesId;
+    // cuisines
+    //   .findById(id)
+    //   .exec()
+    //   .then((doc) => {
+    //     console.log(doc);
+    //     res.status(200).json(doc);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     res.status(500).json({ error: err });
+    //   });
+  });
+  cuisine
+    .save()
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err));
+  res.status(201).json({
+    message: "Handling Post requests",
+    createdCuisine: cuisine,
+  });
 });
+
 const explore = asyncHandler(async (req, res) => {
   res.render("explore", { title: "Explore" });
 });

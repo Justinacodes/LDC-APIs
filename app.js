@@ -1,9 +1,43 @@
 const express = require("express"); //import express
 const hbs = require("express-handlebars");
 
-// const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 
 const app = express(); 
+
+
+//const uri = process.env.mongo;
+//mongoose.connect(uri, {});
+
+mongoose.connect(
+  "mongodb+srv://justinaominisan24:" + process.env.mongo + "@local-dish-corner.e5nsitl.mongodb.net/?retryWrites=true&w=majority&appName=local-dish-corner"
+  
+).then(() => {
+  console.log("mongo connected")
+})
+  .catch(() => {
+  console.log("error")
+  })
+
+const myschema = new mongoose.Schema({
+    
+  name: {
+    type: String,
+    required:true
+  }
+})
+  
+const collection = new mongoose.model("Mycuisines", myschema)
+
+
+data = [{
+  name: "techy",
+},
+  {
+  name: "Justina"
+}
+];
+collection.insertMany(data)
 // //const bodyParser = require("body-parser");
 // mongoose.connect(
 //   'mongodb+srv://justinaominisan:456198@ldccluster.ffgnac9.mongodb.net'
