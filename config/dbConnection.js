@@ -1,23 +1,26 @@
-// const mongoose = require("mongoose");
-// require('mongoose');
-// require('dotenv').config();
-// const config = {}
-// mongoose.set('strictQuery', false);
-// config.connectDb
+const mongoose = require("mongoose");
+require('dotenv').config();
 
-// config.connectDb = async () => {
-//     try {
-//         const connect = await mongoose.connect(process.env.mongo, );
-//         console.log("Database Connected: ",
-//             connect.connection.host,
-//             connect.connection.name)
-    
-//     }
-//     catch (err) {
-//         console.log(err);
-//         process.exit(1)
-//     }
-// };
 
-// module.exports = connectDb;
+const config = {}
+mongoose.set('strictQuery', false);
+
+
+
+config.connectDb = async () => {
+	try {
+		const conn = await mongoose.connect(process.env.dbUrl, {});
+        console.log(
+			`\x1b[36m%s\x1b[0m`,
+			`DB: MongoDB Connected: ${conn.connection.host}`,
+		);
+	} catch (error) {
+		console.log(
+			`\x1b[31m%s\x1b[0m`,
+			`DB: MongoDB Conn Failure: ${error.message}`,
+		);
+		process.exit(1);
+	}
+};
+module.exports = config
 

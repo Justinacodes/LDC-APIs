@@ -1,66 +1,15 @@
-const express = require("express"); //import express
+const express = require("express");
 const hbs = require("express-handlebars");
-
-const mongoose = require("mongoose")
-
-const app = express(); 
-
-
-//const uri = process.env.mongo;
-//mongoose.connect(uri, {});
-
-mongoose.connect(
-  "mongodb+srv://justinaominisan24:" + process.env.mongo + "@local-dish-corner.e5nsitl.mongodb.net/?retryWrites=true&w=majority&appName=local-dish-corner"
-  
-).then(() => {
-  console.log("mongo connected")
-})
-  .catch(() => {
-  console.log("error")
-  })
-
-const myschema = new mongoose.Schema({
-    
-  name: {
-    type: String,
-    required:true
-  }
-})
-  
-const collection = new mongoose.model("Mycuisines", myschema)
-
-
-data = [{
-  name: "techy",
-},
-  {
-  name: "Justina"
-}
-];
-collection.insertMany(data)
-// //const bodyParser = require("body-parser");
-// mongoose.connect(
-//   'mongodb+srv://justinaominisan:456198@ldccluster.ffgnac9.mongodb.net'
-// );
-// const userSchema = new mongoose.Schema({
-//   name: String,
-//   age: Number
-// })
-// const UserModel = mongoose.model("users", userSchema)
-// app.get('/', (req, res) => {
-//   UserModel.find({}).then(function (users) {
-//     res.json(users)
-//   }).catch(function (err) {
-//     console.log(err)
-//   })
-// })
+const mongoose = require("mongoose");
 const { routerManager } = require("./routes/rts");
-const { errorHandler } = require("./controllers/ctrl");
+const { errorConverter, errorHandler } = require('./middleware/errorHandler');
+const config = require("./config/dbConnection"); 
 
-//const cors = require("cors");
-const port = 5001; //port number
 
-//connectDb();
+const app = express();
+const PORT = 5001;
+
+
 app.engine(
   "hbs",
   hbs.engine({
@@ -72,17 +21,28 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.use(express.static(__dirname + "/public"));
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// app.get("/", (req, res) => {
-//   res.send("Home");
-// });
+app.use(errorHandler);
+app.use(errorConverter);
 app.use("/", routerManager);
 
-app.use(errorHandler);
-//app.use(connect)
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+
+const startApp = async () => {
+	try {
+		// Connect to the database
+		await config.connectDb();
+		console.log(`\x1b[32mDB:\x1b[0m MongoDB Connected`);
+		console.log(`\x1b[36mServer:\x1b[0m Starting server...`);
+
+		// Start the server
+		app.listen(PORT, () => {
+			console.log(`\x1b[36mServer:\x1b[0m Server started on port ${PORT}`);
+		});
+	} catch (error) {
+		console.log(` ${error.message}`);
+		//shutdown();
+	}
+};
+
+startApp();
