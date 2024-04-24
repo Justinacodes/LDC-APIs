@@ -25,7 +25,6 @@ app.use(errorHandler);
 app.use(errorConverter);
 app.use("/api/v1", routerManager);
 
-
 const startApp = async () => {
   try {
     // Connect to the database
