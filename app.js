@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { routerManager } = require("./routes/rts");
 const { errorConverter, errorHandler } = require("./middleware/errorHandler");
 const config = require("./config/dbConnection");
+const cors = require("cors")
 
 const app = express();
 const PORT = process.env.PORT || 5001; // Use environment variable for port if available
@@ -31,6 +32,8 @@ app.use("/api/v1", routerManager);
 // Error handling middleware
 app.use(errorConverter);
 app.use(errorHandler);
+app.use(cors);
+
 
 // Start the application
 const startApp = async () => {
