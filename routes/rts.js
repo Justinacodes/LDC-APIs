@@ -10,6 +10,7 @@ const {home} = require("../controllers/ctrl");
 routerManager.get("/", home);
 
 
+
 //Vendor routes
 routerManager.get("/restaurant", restaurant);
 routerManager.post("/restaurant", restaurant);
