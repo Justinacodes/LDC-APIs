@@ -1,7 +1,6 @@
 {
   "name": "ldc-apis",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js"
@@ -10,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -17,6 +17,7 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "express-handlebars": "^7.1.2",
+    "firebase": "^10.11.1",
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
@@ -24,5 +25,14 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Justinacodes/LDC-APIs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Justinacodes/LDC-APIs/issues"
+  },
+  "homepage": "https://github.com/Justinacodes/LDC-APIs#readme",
+  "description": ""
 }
