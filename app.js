@@ -8,21 +8,6 @@ const config = require("./config/dbConnection");
 const app = express();
 const PORT = process.env.PORT || 5001; // Use environment variable for port if available
 
-const { initializeApp } =require("firebase/app");
-const { getAnalytics } = require("firebase/analytics");
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA7wQiX4E2PuPY-ZVtes4cZSBPB7Ce_DlQ",
-  authDomain: "localdishcorner-c4dca.firebaseapp.com",
-  projectId: "localdishcorner-c4dca",
-  storageBucket: "localdishcorner-c4dca.appspot.com",
-  messagingSenderId: "697599555970",
-  appId: "1:697599555970:web:2688716a214f9ded4ff79b",
-  measurementId: "G-Q2MVL5S2P4",
-};
-
-const appF = initializeApp(firebaseConfig);
-const analytics = getAnalytics(appF);
 
 // View engine setup
 app.engine(
