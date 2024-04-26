@@ -1,4 +1,7 @@
 env
 node_modules
 
-
+node_modules
+env
+nodemon.json
+package-lock.json
